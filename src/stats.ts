@@ -1,25 +1,47 @@
-import { getTweetCount } from './twitter.js';
+import { getTweetCount } from "./twitter.js";
 
-const count = {
-  '1': 0,
-  '2': 0,
-  '3': 0,
-  '4': 0,
-  '5': 0,
-  '6': 0,
-  'X': 0,
+export type WordleDNFData = {
+  stats: ComputedStats;
+  count: WordleTweetsCount;
+}
+
+export type WordleTweetsCount = {
+  1: number;
+  2: number;
+  3: number;
+  4: number;
+  5: number;
+  6: number;
+  X: number;
 };
 
-const stats = {
+const count: WordleTweetsCount = {
+  "1": 0,
+  "2": 0,
+  "3": 0,
+  "4": 0,
+  "5": 0,
+  "6": 0,
+  X: 0,
+};
+
+export type ComputedStats = {
+  total: number;
+  max: string;
+  dnfp: number;
+  maxp: number;
+};
+
+const stats: ComputedStats = {
   total: 0,
-  max: '0',
+  max: "0",
   dnfp: 0,
   maxp: 0,
 };
 
 function computeTotal() {
   stats.total = Object.values(count).reduce((acc, num) => {
-    return acc += num;
+    return (acc += num);
   }, 0);
 }
 
@@ -49,11 +71,10 @@ export async function tallyScores() {
   }
 }
 
-export function computeStats() {
+export function computeStats(): WordleDNFData {
   computeTotal();
   computeMax();
   computePercentages();
 
   return { count, stats };
 }
-

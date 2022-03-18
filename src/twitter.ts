@@ -8,9 +8,14 @@ type TweetCountResult = {
   tweet_count: number;
 }
 
-const twitterClient = new TwitterApi({
-  accessToken: process.env.TWITTER_API_BEARER_TOKEN
+const writeClient = new TwitterApi({
+  appKey: process.env.TWITTER_APP_KEY,
+  appSecret: process.env.TWITTER_APP_SECRET,
+  accessToken: process.env.TWITTER_ACCESS_TOKEN,
+  accessSecret: process.env.TWITTER_ACESSS_SECRET,
 });
+
+const readClient = new TwitterApi(process.env.TWITTER_BEARER_TOKEN);
 
 function reduceCounts(data: TweetCountResult[]) {
   let count = 0;
@@ -26,7 +31,7 @@ export async function getTweetCount(score) {
   let count = 0;
 
   try {
-    const response = await twitterClient.v2.tweetCountRecent(`Wordle ${getTodaysWordle()} ${score}/6`, { start_time: getTodaysDate().toISOString()});
+    const response = await readClient.v2.tweetCountRecent(`Wordle ${getTodaysWordle()} ${score}/6`, { start_time: getTodaysDate().toISOString()});
     count = reduceCounts(response.data);
   } catch (e) {
     console.log(e)
@@ -36,5 +41,9 @@ export async function getTweetCount(score) {
 }
 
 export async function tweet(message) {
-  twitterClient.v2.tweet(message);
+  try {
+    writeClient.v2.tweet(message);
+  } catch (e) {
+    console.log(e);
+  }
 }

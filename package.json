@@ -1,0 +1,25 @@
+{
+  "name": "wordle-dnf-bot",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A twitter bot that computes the global Wordle DNF percentage ",
+  "main": "dist/index.js",
+  "author": "joe.hart.reads.this@gmail.com",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "twitter-api-v2": "^1.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no tests installed\" && exit 1",
+    "dev": "node --loader ts-node/esm ./src/index.ts",
+    "build": "tsc",
+    "start": "tsc && node dist/index.js"
+  }
+}

@@ -37,15 +37,48 @@ function getTimeOfDayBlurb() {
   }
 }
 
+function convertToWord(guess: string) {
+  switch (guess) {
+    case '1':
+      return 'first';
+    case '2':
+      return 'second';
+    case '3':
+      return 'third';
+    case '4':
+      return 'fourth';
+    case '5':
+      return 'fifth';
+    case '6':
+      return 'sixth';
+  }
+}
+
+function determineEasyBlurb(max: string, maxp: number) {
+  const blurb = {
+    '2': `${maxp}% of players are getting it on their second try — wow!`,
+    '3': `${maxp}% are solving it on their third try.`,
+    '4': `The majority of players, around ${maxp}%, are solving it on their fourth try.`,
+    '5': `${maxp}% of players are solving it on their fifth try.`,
+    '6': `This must be a tricky one because around ${maxp}% of players are solving it in their sixth try.`,
+    'X': `The majority are not finishing it today.`
+  }
+
+  return blurb[max];
+}
+
 function getBlurb(stats: ComputedStats) {
-  const { max, dnfp } = stats;
+  const { max, dnfp, maxp } = stats;
 
   const blurb = [
-    "Most people cannot finish today's Wordle.",
-    "Today's Wordle is very challenging for many people.",
-    "Today's Wordle is challenging.",
-    "Most people can complete today's Wordle.",
-    "Almost everyone is finishing the Wordle today.",
+    `${dnfp}% of players cannot finish today's Wordle. It's a real hard one! ${determineEasyBlurb(max, maxp)}`,
+    `Today's Wordle is very challenging for many people. Its fail rate is around ${dnfp}%. ${determineEasyBlurb(max, maxp)}`,
+    `Today's Wordle is challenging. Around ${dnfp}% of players cannot guess the word correctly. ${determineEasyBlurb(max, maxp)}`,
+    `Most people can complete today's Wordle, but around ${dnfp}% are having trouble guessing it in six tries. ${determineEasyBlurb(max, maxp)}`,
+    `Almost everyone is finishing the Wordle today, but ${dnfp}% of players couldn't get it. ${determineEasyBlurb(max, maxp)}`,
+    `A small percentage, roughly ${dnfp}% of players, are unable to solve today's Wordle. ${determineEasyBlurb(max, maxp)}`,
+    `Less than 1% of players are not able to solve today's Wordle. ${determineEasyBlurb(max, maxp)}`,
+    `A mere ${dnfp}% of players can't solve today's Wordle in six tries. ${determineEasyBlurb(max, maxp)}`
   ];
 
   let tier: number;
@@ -58,8 +91,14 @@ function getBlurb(stats: ComputedStats) {
     tier = 2;
   } else if (dnfp > 5) {
     tier = 3;
-  } else {
+  } else if (dnfp > 2) {
     tier = 4;
+  } else if (dnfp > 1) {
+    tier = 5;
+  } else if (dnfp > 0.5) {
+    tier = 6;
+  } else {
+    tier = 7;
   }
 
   return `${getTimeOfDayBlurb()} ${blurb[tier]}`;

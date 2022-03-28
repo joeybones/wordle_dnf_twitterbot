@@ -60,7 +60,7 @@ function determineEasyBlurb(max: string, maxp: number) {
     '3': `${maxp}% are solving it on their third try.`,
     '4': `The majority of players, around ${maxp}%, are solving it on their fourth try.`,
     '5': `${maxp}% of players are solving it on their fifth try.`,
-    '6': `This must be a tricky one because around ${maxp}% of players are solving it in their sixth try.`,
+    '6': `${maxp}% of players are solving it in their sixth try.`,
     'X': `The majority are not finishing it today.`
   }
 
@@ -74,7 +74,7 @@ function getBlurb(stats: ComputedStats) {
     `${dnfp}% of players cannot finish today's Wordle. It's a real hard one! ${determineEasyBlurb(max, maxp)}`,
     `Today's Wordle is very challenging for many people. Its fail rate is around ${dnfp}%. ${determineEasyBlurb(max, maxp)}`,
     `Today's Wordle is challenging. Around ${dnfp}% of players cannot guess the word correctly. ${determineEasyBlurb(max, maxp)}`,
-    `Most people can complete today's Wordle, but around ${dnfp}% are having trouble guessing it in six tries. ${determineEasyBlurb(max, maxp)}`,
+    `Most people can complete today's Wordle, but ${dnfp}% cannot solve it in six tries. ${determineEasyBlurb(max, maxp)}`,
     `Almost everyone is finishing the Wordle today, but ${dnfp}% of players couldn't get it. ${determineEasyBlurb(max, maxp)}`,
     `A small percentage, roughly ${dnfp}% of players, are unable to solve today's Wordle. ${determineEasyBlurb(max, maxp)}`,
     `Less than 1% of players are not able to solve today's Wordle. ${determineEasyBlurb(max, maxp)}`,

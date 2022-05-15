@@ -15,7 +15,7 @@ export type WordleTweetsCount = {
   X: number;
 };
 
-const count: WordleTweetsCount = {
+const countTemplate: WordleTweetsCount = {
   "1": 0,
   "2": 0,
   "3": 0,
@@ -32,30 +32,30 @@ export type ComputedStats = {
   maxp: number;
 };
 
-const stats: ComputedStats = {
+const statsTemplate: ComputedStats = {
   total: 0,
   max: "0",
   dnfp: 0,
   maxp: 0,
 };
 
-function computeTotal() {
+function computeTotal(count: WordleTweetsCount, stats: ComputedStats) {
   stats.total = Object.values(count).reduce((acc, num) => {
     return (acc += num);
   }, 0);
 }
 
-function computeMax() {
+function computeMax(count: WordleTweetsCount, stats: ComputedStats) {
   let maxTotal = 0;
-  Object.keys(count).forEach((num) => {
-    if (count[num] > maxTotal) {
-      maxTotal = count[num];
-      stats.max = num;
+  Object.keys(count).forEach((numberKey) => {
+    if (count[numberKey] > maxTotal) {
+      maxTotal = count[numberKey];
+      stats.max = numberKey;
     }
   });
 }
 
-function computePercentages() {
+function computePercentages(count: WordleTweetsCount, stats: ComputedStats) {
   let pct = ((count.X / stats.total) * 100).toString();
   stats.dnfp = parseFloat(pct.slice(0, 4));
 
@@ -64,17 +64,21 @@ function computePercentages() {
 }
 
 export async function tallyScores() {
+  const count: WordleTweetsCount = { ...countTemplate };
   const scores = Object.keys(count);
 
   for (let value of scores) {
     count[value] = await getTweetCount(value);
   }
+
+  return count;
 }
 
-export function computeStats(): WordleDNFData {
-  computeTotal();
-  computeMax();
-  computePercentages();
+export function computeStats(count: WordleTweetsCount): WordleDNFData {
+  const stats: ComputedStats = { ...statsTemplate };
+  computeTotal(count, stats);
+  computeMax(count, stats);
+  computePercentages(count, stats);
 
   return { count, stats };
 }

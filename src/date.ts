@@ -1,7 +1,7 @@
 const LAUNCH_DATE = new Date(2021, 5, 19, 0, 0, 0, 0);
 const ONE_DAY_EXACTLY_MS = 1000 * 60 * 60 * 24;
 
-function getWordle(today) {
+export function getWordle(today: Date) {
   const sDateObject = new Date(LAUNCH_DATE);
   const eDateObject = new Date(today);
 

@@ -9,7 +9,7 @@
   "private": false,
   "dependencies": {
     "dotenv": "^16.0.0",
-    "twitter-api-v2": "^1.11.0"
+    "twitter-api-v2": "1.11.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",

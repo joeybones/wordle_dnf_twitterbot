@@ -58,10 +58,10 @@ function determineEasyBlurb(max: string, maxp: number) {
   const blurb = {
     '2': `${maxp}% of players are getting it on their second try — wow!`,
     '3': `${maxp}% are solving it on their third try.`,
-    '4': `The majority of players, around ${maxp}%, are solving it on their fourth try.`,
+    '4': `${maxp}% of players are solving it on their fourth try.`,
     '5': `${maxp}% of players are solving it on their fifth try.`,
-    '6': `${maxp}% of players are solving it in their sixth try.`,
-    'X': `The majority are not finishing it today.`
+    '6': `${maxp}% of players are just barely making it in six.`,
+    'X': `Brace yourselves. It's a real hard one!`
   }
 
   return blurb[max];
@@ -71,7 +71,7 @@ function getBlurb(stats: ComputedStats) {
   const { max, dnfp, maxp } = stats;
 
   const blurb = [
-    `${dnfp}% of players cannot finish today's Wordle. It's a real hard one! ${determineEasyBlurb(max, maxp)}`,
+    `${dnfp}% of players cannot finish today's Wordle. ${determineEasyBlurb(max, maxp)}`,
     `Today's Wordle is very challenging for many people. Its fail rate is around ${dnfp}%. ${determineEasyBlurb(max, maxp)}`,
     `Today's Wordle is challenging. Around ${dnfp}% of players cannot guess the word correctly. ${determineEasyBlurb(max, maxp)}`,
     `Most people can complete today's Wordle, but ${dnfp}% cannot solve it in six tries. ${determineEasyBlurb(max, maxp)}`,
